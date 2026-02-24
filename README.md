@@ -1,10 +1,10 @@
 # HelloApp
 Hello App – Simple Java Hello World Application for Learning Git and GitFlow
 ---
-# PalindomeCheckerApp
+# PalindromeCheckerApp
 // running procedure
 // flow of project
 // objective
-// what are the topic its will be covered
-// which usecase
+// what are the topic it will be covered
+// which use case
 // working of use case 2
