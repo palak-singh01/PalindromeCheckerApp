@@ -1,36 +1,59 @@
+import java.util.*;
+
 public class PalindromeCheckerApp {
 
-    public static boolean isPalindrome(String input) {
-
-        // Step 1: Normalize the string
+    // Stack based palindrome check
+    public static boolean stackPalindrome(String input) {
         String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        Stack<Character> stack = new Stack<>();
 
-        // Step 2: Convert to char array
-        char[] arr = normalized.toCharArray();
-
-        // Step 3: Check palindrome
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left < right) {
-            if (arr[left] != arr[right]) {
-                return false;
-            }
-            left++;
-            right--;
+        for (char c : normalized.toCharArray()) {
+            stack.push(c);
         }
 
+        for (char c : normalized.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Deque based palindrome check
+    public static boolean dequePalindrome(String input) {
+        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : normalized.toCharArray()) {
+            deque.add(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
         return true;
     }
 
     public static void main(String[] args) {
 
-        String str = "Race Car";
+        String text = "A man a plan a canal Panama";
 
-        if (isPalindrome(str)) {
-            System.out.println(str + " is a palindrome ");
-        } else {
-            System.out.println(str + " is not a palindrome");
-        }
+        // Measure Stack strategy
+        long start1 = System.nanoTime();
+        boolean result1 = stackPalindrome(text);
+        long end1 = System.nanoTime();
+        long stackTime = end1 - start1;
+
+        // Measure Deque strategy
+        long start2 = System.nanoTime();
+        boolean result2 = dequePalindrome(text);
+        long end2 = System.nanoTime();
+        long dequeTime = end2 - start2;
+
+        System.out.println("Input: " + text);
+        System.out.println("Stack Result: " + result1 + " | Time: " + stackTime + " ns");
+        System.out.println("Deque Result: " + result2 + " | Time: " + dequeTime + " ns");
     }
 }
