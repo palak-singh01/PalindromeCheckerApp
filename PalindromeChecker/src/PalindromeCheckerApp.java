@@ -1,29 +1,36 @@
 public class PalindromeCheckerApp {
 
-    public boolean isPalindrome(String s) {
-        // Pre-processing: remove non-alphanumeric and convert to lowercase
-        String clean = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-        return checkRecursive(clean, 0, clean.length() - 1);
-    }
+    public static boolean isPalindrome(String input) {
 
-    private boolean checkRecursive(String s, int start, int end) {
-        // 1. Base Condition: If pointers cross or meet, it's a palindrome
-        if (start >= end) {
-            return true;
+        // Step 1: Normalize the string
+        String normalized = input.toLowerCase().replaceAll("\\s+", "");
+
+        // Step 2: Convert to char array
+        char[] arr = normalized.toCharArray();
+
+        // Step 3: Check palindrome
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            if (arr[left] != arr[right]) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        // 2. Recursive Step: Compare characters at current bounds
-        if (s.charAt(start) != s.charAt(end)) {
-            return false; // Character mismatch found
-        }
-
-        // 3. Move inward: Call the function for the smaller subproblem
-        return checkRecursive(s, start + 1, end - 1);
+        return true;
     }
 
     public static void main(String[] args) {
-        PalindromeCheckerApp checker = new PalindromeCheckerApp();
-        String word = "level";
-        System.out.println("Is '" + word + "' a palindrome? " + checker.isPalindrome(word));
+
+        String str = "Race Car";
+
+        if (isPalindrome(str)) {
+            System.out.println(str + " is a palindrome ");
+        } else {
+            System.out.println(str + " is not a palindrome");
+        }
     }
 }
